@@ -13,6 +13,7 @@ before:
   - type: createIssue
     title: Bienvenida
     body: 00_class-introduction-issue.md
+
 steps:
   - title: Activa GitHub Pages
     description: >-
@@ -32,6 +33,7 @@ steps:
         data:
           deploymentUrl: '%actions.pagesUrl.data.html_url%'
       - type: updateBranchProtection
+
   - title: Personaliza tu página inicial
     description: Abre un pull request con cambios en la página inicial.
     event: pull_request.opened
@@ -53,6 +55,7 @@ steps:
           branch: '%payload.pull_request.head.ref%'
       - type: closeIssue
         issue: Welcome
+
   - title: Combina tu pull request
     description: Combina el pull request que personaliza tu página inicial.
     event: pull_request.closed
@@ -63,7 +66,7 @@ steps:
       - type: gate
         left: '%payload.pull_request.base.ref%'
         operator: ===
-        right: master
+        right: 'master'
       - type: updateBranchProtection
       - type: octokit
         method: repos.getPages
@@ -75,11 +78,12 @@ steps:
         title: Getting ready to blog
         body: 03_change-theme.md
         data:
-          deploymentUrl: '%actions.pagesUrl.data.html_url%'
+          deploymentUrl: '%actions.pagesUrl.data.html_url%'      
       - type: respond
         with: 03_merged-pr.md
         data:
           url: '%actions.issue.data.html_url%'
+
   - title: Personaliza los detalles del sitio
     description: Edita el archivo de configuración para mostrar tu información.
     event: pull_request
@@ -124,6 +128,7 @@ steps:
         data:
           branch: '%payload.pull_request.head.ref%'
           date: '%payload.pull_request.created_at%'
+
   - title: Crea un post
     description: Crea un nuevo archivo que se convertirá en el primer post de tu blog.
     event: pull_request.synchronize
@@ -184,6 +189,7 @@ steps:
       - type: createReview
         body: 05_add-front-matter.md
         event: COMMENT
+
   - title: Añade metadatos al post
     description: Añade texto preliminar YAML al post para mostrar el título y la fecha.
     event: pull_request.synchronize
@@ -236,6 +242,7 @@ steps:
       - type: createReview
         body: 06_merge-and-celebrate.md
         event: APPROVE
+
   - title: Combina tu primer post
     description: >-
       Combina el pull request para que tu post aparezca en tu sitio de
